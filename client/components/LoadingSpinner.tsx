@@ -1,0 +1,12 @@
+'use client'
+
+export function LoadingSpinner() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="text-center">
+        <div className="spinner mx-auto mb-4" style={{ width: '2rem', height: '2rem' }} />
+        <p className="text-gray-600">Loading...</p>
+      </div>
+    </div>
+  )
+}

@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  slack-clone-server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - NODE_ENV=production
+      - MAX_CHANNELS=100
+      - MAX_USERS=1000
+      - MAX_MESSAGES_PER_CHANNEL=20
+      - HEARTBEAT_INTERVAL=30000
+      - CORS_ORIGIN=http://localhost:3000
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3001/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - slack-clone-network
+
+networks:
+  slack-clone-network:
+    driver: bridge
