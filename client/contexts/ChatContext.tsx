@@ -1,7 +1,7 @@
 'use client'
 
 import React, { createContext, useContext, useReducer, useEffect, useRef } from 'react'
-import { SimpleWebSocketService } from '@/services/SimpleWebSocketService'
+import { WebSocketService } from '@/services/WebSocketService'
 import { ApiService } from '@/services/ApiService'
 
 // Types
@@ -119,7 +119,7 @@ function chatReducer(state: ChatState, action: ChatAction): ChatState {
 interface ChatContextType {
   state: ChatState
   dispatch: React.Dispatch<ChatAction>
-  wsService: SimpleWebSocketService | null
+  wsService: WebSocketService | null
   apiService: ApiService
   joinChannel: (channelId: string) => Promise<void>
   leaveChannel: (channelId: string) => Promise<void>
@@ -141,13 +141,13 @@ interface ChatProviderProps {
 
 export function ChatProvider({ children, user }: ChatProviderProps) {
   const [state, dispatch] = useReducer(chatReducer, { ...initialState, user })
-  const wsServiceRef = useRef<SimpleWebSocketService | null>(null)
+  const wsServiceRef = useRef<WebSocketService | null>(null)
   const apiService = useRef(new ApiService()).current
 
   // Initialize WebSocket connection
   useEffect(() => {
     if (user) {
-      const wsService = new SimpleWebSocketService(dispatch, user)
+      const wsService = new WebSocketService(dispatch, user)
       wsServiceRef.current = wsService
 
       return () => {
