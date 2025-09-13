@@ -22,7 +22,7 @@ export default function HomePage() {
 
     try {
       // Check if user exists, if not create one
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/username/${encodeURIComponent(username.trim())}`)
+      const response = await fetch(`/api/users/username/${encodeURIComponent(username.trim())}`)
       
       let user
       if (response.ok) {
@@ -30,7 +30,7 @@ export default function HomePage() {
         user = data.data
       } else if (response.status === 404) {
         // User doesn't exist, create one
-        const createResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
+        const createResponse = await fetch(`/api/users`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
