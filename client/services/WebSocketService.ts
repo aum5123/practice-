@@ -1,19 +1,14 @@
 import { ChatAction, User, Channel, Message, TypingUser } from '@/contexts/ChatContext'
 
 export class WebSocketService {
-  private ws: WebSocket | null = null
   private dispatch: React.Dispatch<ChatAction>
   private user: User
-  private reconnectAttempts = 0
-  private maxReconnectAttempts = 5
-  private reconnectDelay = 1000
-  private heartbeatInterval: NodeJS.Timeout | null = null
-  private isConnecting = false
+  private isConnected = true
 
   constructor(dispatch: React.Dispatch<ChatAction>, user: User) {
     this.dispatch = dispatch
     this.user = user
-    this.connect()
+    // No WebSocket connection needed for Vercel API routes
   }
 
   private connect() {
