@@ -1,14 +1,15 @@
+import { db } from '../../../lib/database';
+
 // Users API endpoint
 export default function handler(req, res) {
   if (req.method === 'GET') {
-    // Return empty users array for now
+    const users = db.getAllUsers();
     res.status(200).json({
       success: true,
-      data: [],
-      count: 0
+      data: users,
+      count: users.length
     });
   } else if (req.method === 'POST') {
-    // Create user
     const { username } = req.body;
     
     if (!username) {
@@ -18,12 +19,16 @@ export default function handler(req, res) {
       });
     }
 
-    const user = {
-      id: Math.random().toString(36).substr(2, 9),
-      username,
-      createdAt: new Date().toISOString(),
-      lastSeen: new Date().toISOString()
-    };
+    // Check if user already exists
+    const existingUser = db.getUserByUsername(username);
+    if (existingUser) {
+      return res.status(409).json({
+        success: false,
+        error: 'Username already exists'
+      });
+    }
+
+    const user = db.createUser({ username });
 
     res.status(201).json({
       success: true,

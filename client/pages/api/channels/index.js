@@ -1,14 +1,15 @@
+import { db } from '../../../lib/database';
+
 // Channels API endpoint
 export default function handler(req, res) {
   if (req.method === 'GET') {
-    // Return empty channels array for now
+    const channels = db.getAllChannels();
     res.status(200).json({
       success: true,
-      data: [],
-      count: 0
+      data: channels,
+      count: channels.length
     });
   } else if (req.method === 'POST') {
-    // Create channel
     const { name, createdBy } = req.body;
     
     if (!name || !createdBy) {
@@ -18,13 +19,16 @@ export default function handler(req, res) {
       });
     }
 
-    const channel = {
-      id: Math.random().toString(36).substr(2, 9),
-      name,
-      createdBy,
-      createdAt: new Date().toISOString(),
-      memberCount: 0
-    };
+    // Check if channel already exists
+    const existingChannel = db.getAllChannels().find(c => c.name === name);
+    if (existingChannel) {
+      return res.status(409).json({
+        success: false,
+        error: 'Channel name already exists'
+      });
+    }
+
+    const channel = db.createChannel({ name, createdBy });
 
     res.status(201).json({
       success: true,
