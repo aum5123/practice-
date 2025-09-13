@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { ChatProvider } from '@/contexts/ChatContext'
 import { Sidebar } from '@/components/Sidebar'
-import { ChatArea } from '@/components/ChatArea'
+import { SimpleChat } from '@/components/SimpleChat'
 import { Header } from '@/components/Header'
 import { LoadingSpinner } from '@/components/LoadingSpinner'
 
@@ -48,7 +48,7 @@ export default function ChatPage() {
         <Header user={user} />
         <div className="flex flex-1 overflow-hidden">
           <Sidebar />
-          <ChatArea />
+          <SimpleChat />
         </div>
       </div>
     </ChatProvider>
