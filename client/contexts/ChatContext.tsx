@@ -180,10 +180,27 @@ export function ChatProvider({ children, user }: ChatProviderProps) {
       // Load messages
       await loadMessages(channelId)
 
-      // Update current channel
-      const channel = state.channels.find(c => c.id === channelId)
+      // Find channel in current channels or fetch it
+      let channel = state.channels.find(c => c.id === channelId)
+      if (!channel) {
+        // If channel not found in state, fetch it from API
+        try {
+          const response = await fetch(`/api/channels/${channelId}`)
+          if (response.ok) {
+            const result = await response.json()
+            if (result.success) {
+              channel = result.data
+            }
+          }
+        } catch (error) {
+          console.error('Failed to fetch channel:', error)
+        }
+      }
+
       if (channel) {
         dispatch({ type: 'SET_CURRENT_CHANNEL', payload: channel })
+      } else {
+        dispatch({ type: 'SET_ERROR', payload: 'Channel not found' })
       }
     } catch (error) {
       dispatch({ type: 'SET_ERROR', payload: error instanceof Error ? error.message : 'Failed to join channel' })

@@ -2,7 +2,29 @@
 // Note: This data will be lost when the serverless function restarts
 
 let users = [];
-let channels = [];
+let channels = [
+  {
+    id: 'default-general',
+    name: 'general',
+    createdBy: 'system',
+    createdAt: new Date().toISOString(),
+    memberCount: 0
+  },
+  {
+    id: 'default-random',
+    name: 'random',
+    createdBy: 'system',
+    createdAt: new Date().toISOString(),
+    memberCount: 0
+  },
+  {
+    id: 'default-dev',
+    name: 'dev',
+    createdBy: 'system',
+    createdAt: new Date().toISOString(),
+    memberCount: 0
+  }
+];
 let messages = [];
 
 export const db = {
