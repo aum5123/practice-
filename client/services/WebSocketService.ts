@@ -47,7 +47,7 @@ export class WebSocketService {
     return this.isConnected ? 1 : 3 // 1 = OPEN, 3 = CLOSED
   }
 
-  isConnected(): boolean {
+  getIsConnected(): boolean {
     return this.isConnected
   }
 }

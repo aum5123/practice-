@@ -15,7 +15,7 @@ interface HeaderProps {
 
 export function Header({ user }: HeaderProps) {
   const router = useRouter()
-  const { state } = useChat()
+  const { state, dispatch } = useChat()
   const [showMenu, setShowMenu] = useState(false)
 
   const handleLogout = () => {
@@ -113,7 +113,7 @@ export function Header({ user }: HeaderProps) {
           <div className="flex items-center justify-between">
             <p className="text-sm text-error-700">{state.error}</p>
             <button
-              onClick={() => state.dispatch({ type: 'CLEAR_ERROR' })}
+              onClick={() => dispatch({ type: 'CLEAR_ERROR' })}
               className="text-error-500 hover:text-error-700"
             >
               ×

@@ -1,15 +1,16 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Slack Clone - Team Chat Application',
   description: 'A real-time team chat application built with Next.js and WebSockets',
   keywords: ['chat', 'team', 'real-time', 'websocket', 'slack-clone'],
   authors: [{ name: 'Fullstack Engineer' }],
-  viewport: 'width=device-width, initial-scale=1',
+}
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
 }
 
 export default function RootLayout({
@@ -19,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className="font-sans">
         <div className="min-h-screen bg-gray-50">
           {children}
         </div>

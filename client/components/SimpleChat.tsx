@@ -8,7 +8,7 @@ import { EmptyState } from './EmptyState'
 
 export function SimpleChat() {
   const { state } = useChat()
-  const [messages, setMessages] = useState([])
+  const [messages, setMessages] = useState<any[]>([])
   const [newMessage, setNewMessage] = useState('')
 
   // Simulate real-time messaging with polling
@@ -21,7 +21,7 @@ export function SimpleChat() {
     return () => clearInterval(interval)
   }, [])
 
-  const handleSendMessage = async (content) => {
+  const handleSendMessage = async (content: string) => {
     if (!content.trim() || !state.currentChannel) return
 
     const message = {

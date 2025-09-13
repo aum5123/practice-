@@ -49,7 +49,7 @@ interface ChatState {
 }
 
 // Action types
-type ChatAction =
+export type ChatAction =
   | { type: 'SET_USER'; payload: User }
   | { type: 'SET_CHANNELS'; payload: Channel[] }
   | { type: 'SET_CURRENT_CHANNEL'; payload: Channel | null }
